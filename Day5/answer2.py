@@ -1,0 +1,1 @@
+f = open("Day5\data.txt")
