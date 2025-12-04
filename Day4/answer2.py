@@ -1,5 +1,7 @@
 from sortedcontainers import SortedSet
-f = open("Day4\data1.txt")
+import time
+time_start = time.time()
+f = open("Day4\data.txt")
 
 removed = set()
 roll_d = {}
@@ -46,5 +48,7 @@ while -ss[-1][0] < 4:
     _, r, c = ss.pop()
     removed.add((r, c))
     removeRollAndUpdateCounts(r, c)
-    
+time_end = time.time()
+print(time_end - time_start)
+
 print(res)
