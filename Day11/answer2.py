@@ -16,8 +16,9 @@ def solve(f):
         graph.setdefault(node, next_nodes)
 
     visited = set()
-    def dfsPathCount(node):
-        if node == "out" and visited.issuperset({"fft", "dac"}):
+    @cache
+    def dfsPathCount(node, end):
+        if node == end:
             return 1
         if node not in graph:
             return 0
@@ -26,11 +27,14 @@ def solve(f):
         for n in graph[node]:
             if n not in visited:
                 visited.add(n)
-                res += dfsPathCount(n)
+                res += dfsPathCount(n, end)
                 visited.remove(n)
         return res
     
-    return dfsPathCount("svr")
+    return (
+        dfsPathCount("svr", "dac") * dfsPathCount("dac", "fft") * dfsPathCount("fft", "out")
+        + dfsPathCount("svr", "fft") * dfsPathCount("fft", "dac") * dfsPathCount("dac", "out")
+    )
 
 f = open("Day11\data2.txt")
 data1_answer = 2
